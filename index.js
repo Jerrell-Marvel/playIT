@@ -27,6 +27,10 @@ import cookieParser from "cookie-parser";
 
 // Routes import
 import restaurantRoute from "./routes/restaurant.js";
+import provinsiRoute from "./routes/provinsi.js";
+import kabupatenRoute from "./routes/kabupaten.js";
+import kecamatanRoute from "./routes/kecamatan.js";
+import kelurahanRoute from "./routes/kelurahan.js";
 // import productsRoutes from "./routes/product.js";
 // import cartRoutes from "./routes/cart.js";
 
@@ -41,8 +45,10 @@ app.use(cors());
 
 // Routes
 app.use("/api", restaurantRoute);
-// app.use("/api/v1", productsRoutes);
-// app.use("/api/v1", cartRoutes);
+app.use("/api/provinsi", provinsiRoute);
+app.use("/api/kabupaten", kabupatenRoute);
+app.use("/api/kecamatan", kecamatanRoute);
+app.use("/api/kelurahan", kelurahanRoute);
 
 // app.get("/test", authMiddleware);
 
