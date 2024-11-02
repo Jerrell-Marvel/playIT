@@ -10,10 +10,16 @@ export const getPreparationByDate = async (req, res) => {
     throw new BadRequestError("date must be included");
   }
 
-  const queryText = `SELECT Preparation.date, Preparation_Item.porsi, Menu.nama as menu, Menu.harga FROM Preparation JOIN Preparation_Item ON Preparation.preparation_id = Preparation_Item.preparation_id JOIN Menu ON Preparation_Item.menu_id = Menu.menu_id WHERE Preparation.restaurant_id = $1 AND Preparation.date = $2`;
+  const queryText = `SELECT Preparation.date, Preparation_Item.porsi, Menu.nama as nama, Menu.harga FROM Preparation JOIN Preparation_Item ON Preparation.preparation_id = Preparation_Item.preparation_id JOIN Menu ON Preparation_Item.menu_id = Menu.menu_id WHERE Preparation.restaurant_id = $1 AND Preparation.date = $2`;
 
   const queryResult = await pool.query(queryText, [restaurantId, date]);
-  return res.json(queryResult.rows);
+
+  const queryWaste = `SELECT food_in_gr FROM Waste WHERE date = $1`;
+  const wasteResult = await pool.query(queryWaste, [date]);
+  return res.json({
+    menu: queryResult.rows,
+    waste: wasteResult.rows[0]?.food_in_gr || null,
+  });
 };
 
 export const addPreparation = async (req, res) => {
@@ -49,7 +55,7 @@ export const addPreparation = async (req, res) => {
 
     await client.query("COMMIT");
 
-    return res.json(preparationId);
+    return res.json({ preparation_id: preparationId });
   } catch (error) {
     console.log(error);
     await client.query("ROLLBACK");

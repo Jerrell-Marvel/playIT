@@ -38,6 +38,7 @@ import bahanRoute from "./routes/bahan.js";
 import menuRoute from "./routes/menu.js";
 import preparationRoute from "./routes/preparation.js";
 import wasteRoute from "./routes/waste.js";
+import predictRoute from "./routes/prediction.js";
 
 // Cookie parse
 app.use(cookieParser());
@@ -58,6 +59,7 @@ app.use("/api/bahan", bahanRoute);
 app.use("/api/menu", menuRoute);
 app.use("/api/preparation", preparationRoute);
 app.use("/api/waste", wasteRoute);
+app.use("/api/prediction", predictRoute);
 
 // app.get("/test", authMiddleware);
 

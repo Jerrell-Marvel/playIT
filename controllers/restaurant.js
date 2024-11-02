@@ -51,5 +51,5 @@ export const login = async (req, res) => {
     expiresIn: process.env.JWT_LIFETIME,
   });
 
-  return res.cookie("token", token, { sameSite: "none", secure: true, httpOnly: true }).json({ success: true, token });
+  return res.json({ success: true, token });
 };
